@@ -1,48 +1,92 @@
-# Restaurant Kiosk Security Assessment
-**Professional Security Research & Vulnerability Demonstration**
+## Restaurant Kiosk Security Assessment
 
-This project demonstrates a comprehensive security assessment of **tablet-based self-service kiosks (TBSSKs)** in the casual dining industry. It focuses on three high-impact vulnerabilities:
+A security assessment of a restaurant tablet kiosk system, combining real-world interface observation with controlled API vulnerability testing and remediation.
 
-1. **Tablet UI Escape** – Users bypass the kiosk interface to access system settings.  
-2. **Broken Object Level Authorization (BOLA / IDOR)** – Users can modify other users’ data due to missing server-side ownership checks.  
-3. **Mass Assignment / Authorization Bypass** – Users can escalate roles (e.g., Customer → Admin/Chef) via unvalidated API fields.
+This project demonstrates common application security issues observed in modern kiosk-style systems and REST APIs. The research combines **field observation**, **controlled vulnerability testing**, and **secure coding remediation** to illustrate how these weaknesses can be identified and mitigated.
 
 ---
 
-## Key Features
+## Security Findings
 
-- **Real-World Observations** – Non-invasive field testing of kiosk interfaces.  
-- **Ethical API Exploitation** – Controlled testing in **Damn Vulnerable RESTaurant (DVREST)**.  
-- **Validated Remediation** – Demonstrated fixes for BOLA and Mass Assignment vulnerabilities with strict field-level validation.  
-- **Low-Cost, High-ROI Security** – Targeted mitigations prevent multi-million-dollar breach exposure.  
-- **Compliance Alignment** – Remediations align with **PCI DSS**, **NIST SP 800-53**, and **OWASP Top 10** standards.
+This assessment documents several security observations and vulnerability demonstrations discovered during testing. Findings were validated in a controlled **DVREST API environment** to safely demonstrate exploitation scenarios and remediation techniques.
 
----
+### Summary of Findings
 
-## Tools & Environment
+| Category | Vulnerability | Impact | Demonstration |
+|---|---|---|---|
+| Kiosk Interface | Tablet UI Escape | Access to internal kiosk configuration menus | [View Demo](videos/README.md#1-field-observation--tablet-ui-escape) |
+| API Security | Broken Object Level Authorization (BOLA / IDOR) | Unauthorized modification of another user's profile | [View Demo](videos/README.md#2-bola--idor-exploit--remediation) |
+| API Security | Mass Assignment | Privilege escalation via injected request fields | [View Demo](videos/README.md#3-mass-assignment--authorization-bypass-exploit--remediation) |
 
-- **DVREST (Damn Vulnerable RESTaurant)** – Fully intentionally vulnerable sandbox designed for safe testing of REST APIs.  
-  - Supports **endpoint manipulation** and live response monitoring.  
-  - Demonstrates common high-risk vulnerabilities, including **BOLA/IDOR and Mass Assignment**, in a controlled environment.  
+Detailed demonstrations of each finding are available in the project’s video documentation.
 
-> All testing, exploitation, and remediation validation was performed directly within DVREST—no external tools were required.
+➡ **[View All Demonstration Videos](videos/README.md)**
 
 ---
 
-## Why This Project Matters
+## Research Methodology
 
-Tablet-based self-service kiosks are widely adopted but often poorly secured, exposing restaurants to:
+The assessment followed a structured security testing approach similar to common **application security review workflows**.
 
-- Theft of sensitive customer data (PII & payment info)  
-- Unauthorized administrative control  
-- Regulatory fines and reputational damage  
+### 1. Field Observation
 
-This research shows that **small, targeted code changes and policy enforcement** can eliminate major vulnerabilities, making it relevant for cybersecurity professionals, software engineers, and risk managers.  
+Initial testing involved passive interaction with a tablet-based restaurant kiosk interface. Rapid user input sequences allowed navigation outside the intended ordering interface and exposed backend configuration menus.
+
+### 2. Controlled Vulnerability Testing
+
+To safely reproduce and analyze vulnerabilities, a **local DVREST API environment** was used. This allowed testing of authentication and authorization weaknesses without interacting with live production systems.
+
+### 3. Vulnerability Analysis
+
+Two primary API security issues were identified and reproduced:
+
+- **Broken Object Level Authorization (BOLA / IDOR)**  
+  A user could modify another user's profile due to missing ownership validation.
+
+- **Mass Assignment**  
+  The API accepted unexpected request fields, allowing a regular user to escalate privileges by injecting role attributes.
+
+### 4. Remediation Implementation
+
+Secure coding fixes were implemented to mitigate the vulnerabilities:
+
+- Server-side object ownership validation
+- Field whitelisting for update operations
+- Rejection of unexpected input fields
+- Defensive API model configuration
+
+### 5. Validation Testing
+
+After applying remediation, exploitation attempts were repeated to verify that the vulnerabilities were successfully mitigated.
 
 ---
 
-## Ethical Statement
+## Ethical Considerations
 
-- Field testing was **non-invasive**; no production systems were modified.  
-- All API testing was performed in a **sandboxed DVREST environment**, eliminating risk to real-world systems.  
-- Vulnerabilities were responsibly documented and remediated to demonstrate **secure best practices**.
+- All demonstrations were conducted in a **controlled local environment**.
+- No production systems were accessed or modified.
+- Field observations were **non-invasive** and did not alter system data.
+
+This project is intended solely for **educational and security research purposes**.
+
+---
+
+## Project Documentation
+
+| Section | Description |
+|---|---|
+| `videos/` | Demonstration videos of vulnerabilities and remediation |
+| `README.md` | Project overview and research summary |
+
+➡ **[View Video Demonstrations](videos/README.md)**
+
+---
+
+## Skills Demonstrated
+
+- Application Security Testing  
+- API Security Analysis  
+- Vulnerability Reproduction  
+- Secure Coding Remediation  
+- Authorization Control Design  
+- Security Documentation
